@@ -35,6 +35,11 @@ async def predict(
         file: UploadFile = File(...)
 ):
     image = read_file_as_image(await file.read())
+    
+    # resize the image to 256x256
+    image = Image.fromarray(image).resize((256, 256))
+    image = np.array(image)
+    
     img_batch = np.expand_dims(image, 0)
 
     predictions = MODEL.predict(img_batch)
